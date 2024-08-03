@@ -2,6 +2,9 @@ console.log("sa marche");
 
 //------------
 
+import { ajoutListenersAvis } from "./avis.js";
+
+
 // récupération des pièces depuis le fichier JSON
 const reponse = await fetch("pieces-autos.json");
 const pieces = await reponse.json();
@@ -36,7 +39,11 @@ function genererPieces(pieces) {     //
         categorieElement.innerText = pieces[i].categorie ?? "aucune catégorie";
 
         const stockElement = document.createElement("p");
-        stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock"; 
+        stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock";
+        
+        const avisBouton = document.createElement("button");
+        avisBouton.dataset.id = article.id;
+        avisBouton.textContent = "Afficher les avis";
 
         
         // -------On rattache la balise article à la section Fiches--------
@@ -54,7 +61,10 @@ function genererPieces(pieces) {     //
         pieceElement.appendChild(descriptionElement);
 
         pieceElement.appendChild(stockElement);
+
+        pieceElement.appendChild(avisBouton);
     }  
+    ajoutListenersAvis();
 }
 
 //----------------
