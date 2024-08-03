@@ -6,8 +6,10 @@ import { ajoutListenersAvis } from "./avis.js";
 
 
 // récupération des pièces depuis le fichier JSON
-const reponse = await fetch("pieces-autos.json");
+// const reponse = await fetch("pieces-autos.json");
+const reponse = await fetch('http://localhost:8081/pieces');
 const pieces = await reponse.json();
+
 
 
 function genererPieces(pieces) {     //
@@ -24,8 +26,8 @@ function genererPieces(pieces) {     //
 
         // creation des balises
         const imageElement = document.createElement("img");
-        imageElement.src = pieces[i].image; // On accède à l’indice i de la liste pieces pour configurer la source de l’image.
-        
+        imageElement.src = article.image; // On accède à l’indice i de la liste pieces pour configurer la source de l’image.
+       
         const nomElement = document.createElement("h2");
         nomElement.innerText = pieces[i].nom;
 
