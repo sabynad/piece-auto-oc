@@ -2,15 +2,27 @@ console.log("sa marche");
 
 //------------
 
-import { ajoutListenersAvis } from "./avis.js";
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis, afficherAvis } from "./avis.js";
+
+// Récupération des pièces eventuellement stockées dans le localStorage
+let pieces = window.localStorage.getItem('pieces');
+
+if (pieces === null){ 
+    // récupération des pièces depuis l'API'
+    // const reponse = await fetch("pieces-autos.json");
+    const reponse = await fetch('http://localhost:8081/pieces');
+    pieces = await reponse.json();
+    // transformation des pieces en JSON
+    const valeurPieces = JSON.stringify(pieces);
+    // stockage des informations dans le localStorage
+    window.localStorage.setItem("pieces", valeurPieces);
+}else{
+    pieces =JSON.parse(pieces);
+}
 
 
-// récupération des pièces depuis le fichier JSON
-// const reponse = await fetch("pieces-autos.json");
-const reponse = await fetch('http://localhost:8081/pieces');
-const pieces = await reponse.json();
-
-
+// on appel la fonction pour ajouter le listener au formulaire
+ajoutListenerEnvoyerAvis()
 
 function genererPieces(pieces) {     //
 //------------
@@ -72,6 +84,17 @@ function genererPieces(pieces) {     //
 //----------------
 
 genererPieces(pieces);
+
+for(let i = 0; i < pieces.length; i++) {
+    const id = pieces[i].id;
+    const avisJSON = windowStorage.getItem('avis-piece-${id}');
+    const avis = JSON.parse(avisJSON);
+
+    if(avis !== null) {
+        const pieceElement = document.querySelector(`article[date-id="${id}"]`);
+        afficherAvis(pieceElement, avis); //appelle de la function
+    }
+}
 
 // ----------Gestion des boutons-----------------
 const boutonTrier = document.querySelector(".btn-trier");
@@ -175,3 +198,9 @@ inputPrixMax.addEventListener('input', function(){
     document.querySelector(".fiches").innerHTML = "";
     genererPieces(piecesFiltrees);
 })
+
+// Ajout du listener pour mettre à jour des données au localStorage
+const boutonMettreAJour = document.quereySelector(".btn-maj");
+boutonMettreAJour.addEventListener('click', function(e) {
+    window.localStorage.removeItem(boutonMettreAJour("pieces"));
+});

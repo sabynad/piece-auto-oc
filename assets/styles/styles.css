@@ -70,3 +70,10 @@ main {
 .fiches article h2 {
 	text-align: center;
 }
+
+/* ---------------AJOUT AVIS--------------  */
+
+.formulaire-avis{
+    line-height: 1.6;
+}
+
