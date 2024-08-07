@@ -5,6 +5,9 @@
 		<title>Les Bonnes Pièces</title>
 		<link rel="stylesheet" href="assets/styles/styles.css">
 		<script type="module" src="assets/script/pieces.js"></script>
+		<!--defer permet de  de retarder le chargement de ce fichier à plus tard, lorsque le fichier index.html aura, lui-même, fini de se charger.-->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
 	</head>
 	<body>
 		<header>
@@ -25,7 +28,7 @@
 					<button class="btn-filtrer-description">Pièces avec description</button>
 					<br>
 					<p> Prix maximum: </p>
-					<input type="range" id="prix_max" name="prix-max" min="0" max="60" step="5">
+					<input type="range" id="prix_max" name="prix-max" min="1" max="60" step="5">
 				</div>
                 <!-- form avis -->
                 <h3>Ajouter un avis</h3>
@@ -43,6 +46,8 @@
 				</form>
                 <h3>Données</h3>
                 <button class="btn-maj">Mettre à jour les pièces</button>
+				<h3>Aperçu des avis</h3>
+				<canvas id="graphique-avis" width="300" height="300"></canvas>
 			</section>
 
 			<!-- Fiches produits -->

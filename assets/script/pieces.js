@@ -2,7 +2,7 @@ console.log("sa marche");
 
 //------------
 
-import { ajoutListenersAvis, ajoutListenerEnvoyerAvis, afficherAvis } from "./avis.js";
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis, afficherAvis, afficherGraphiqueAvis } from "./avis.js";
 
 // Récupération des pièces eventuellement stockées dans le localStorage
 let pieces = window.localStorage.getItem('pieces');
@@ -87,7 +87,7 @@ genererPieces(pieces);
 
 for(let i = 0; i < pieces.length; i++) {
     const id = pieces[i].id;
-    const avisJSON = windowStorage.getItem('avis-piece-${id}');
+    const avisJSON = localStorage.getItem('avis-piece-${id}');
     const avis = JSON.parse(avisJSON);
 
     if(avis !== null) {
@@ -200,7 +200,9 @@ inputPrixMax.addEventListener('input', function(){
 })
 
 // Ajout du listener pour mettre à jour des données au localStorage
-const boutonMettreAJour = document.quereySelector(".btn-maj");
+const boutonMettreAJour = document.querySelector(".btn-maj");
 boutonMettreAJour.addEventListener('click', function(e) {
     window.localStorage.removeItem(boutonMettreAJour("pieces"));
 });
+
+await afficherGraphiqueAvis();
