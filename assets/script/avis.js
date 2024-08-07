@@ -91,6 +91,54 @@ export async function afficherGraphiqueAvis(){
         config,
     );             
 
-}
+
     
 
+// afficher graphique nombres de commentaires
+    // Récupération des pièces depuis le localStorage
+    const piecesJSON = window.localStorage.getItem("pieces");
+    //const pieces = piecesJSON ? JSON.parse(piecesJSON) : [];
+    const pieces = JSON.parse(piecesJSON)
+    // Calcul du nombre de commentaires
+    let nbCommentairesDispo = 0;
+    let nbCommentairesNonDispo = 0;
+    //if(pieces.length > 0){
+    for (let i = 0; i < avis.length; i++) {
+        const piece = pieces.find(p => p.id === avis[i].pieceId);
+
+        if (piece) {
+            if (piece.disponibilite) {
+                nbCommentairesDispo++;
+            } else {
+                nbCommentairesNonDispo++;
+            }
+        }
+    }
+
+    // Légende qui s'affichera sur la gauche à côté de la barre horizontale
+    const labelsDispo = ["Disponibles", "Non dispo."];
+
+    // Données et personnalisation du graphique
+    const dataDispo = {
+        labels: labelsDispo,
+        datasets: [{
+            label: "Nombre de commentaires",
+            data: [nbCommentairesDispo, nbCommentairesNonDispo],
+            backgroundColor: "rgba(0, 230, 255, 1)", // turquoise
+        }],
+    };
+
+    // Objet de configuration final
+    const configDispo = {
+        type: "bar",
+        data: dataDispo,
+    };
+    console.log(dataDispo);
+    // Rendu du graphique dans l'élément canvas
+    new Chart(
+        document.querySelector("#graphique-commentaires"),
+        configDispo,
+    );
+
+
+}
