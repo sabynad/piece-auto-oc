@@ -1,6 +1,7 @@
 console.log("sa marche");
 
 //------------
+/* global Chart */
 
 import { ajoutListenersAvis, ajoutListenerEnvoyerAvis, afficherAvis, afficherGraphiqueAvis } from "./avis.js";
 
